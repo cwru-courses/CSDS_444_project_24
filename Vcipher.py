@@ -5,6 +5,7 @@
 # key in a cyclic manner until
 # it's length isn't equal to
 # the length of original text
+import string
 
 class Vigenere():
 
@@ -48,6 +49,10 @@ if __name__ == "__main__":
     Vc = Vigenere()
     Vc.string = input("string:")
     stringup = Vc.string.upper()
+    stringup = stringup.replace(" ",'')
+    punct = string.punctuation
+    for c in punct:
+        stringup = stringup.replace(c, "")
     Vc.key = input("key:")
     keyup = Vc.key.upper()
     KeyWord = Vc.generate_key(stringup, keyup)
