@@ -47,12 +47,14 @@ class Vigenere():
 if __name__ == "__main__":
     Vc = Vigenere()
     Vc.string = input("string:")
+    stringup = Vc.string.upper()
     Vc.key = input("key:")
-    KeyWord = Vc.generate_key(Vc.string, Vc.key)
+    keyup = Vc.key.upper()
+    KeyWord = Vc.generate_key(stringup, keyup)
     print(KeyWord)
-    CipherText = Vc.cipherText(Vc.string, Vc.key)
+    CipherText = Vc.cipherText(stringup, keyup)
     print("CipherText:", CipherText)
-    PlainText = Vc.original_text(CipherText, Vc.key)
+    PlainText = Vc.original_text(CipherText, keyup)
     print("Originaltext:", PlainText)
 
 
