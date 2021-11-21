@@ -91,13 +91,8 @@ if __name__ == "__main__":
     bytestring = bytearray(Vc.string, 'utf-8')
     print(bytestring)
     
-    #stringup = Vc.string.upper()
-    #stringup = stringup.replace(" ",'')
-    #punct = string.punctuation
-    #for c in punct:
-    #    stringup = stringup.replace(c, "")
     Vc.key = input("key:")
-    #keyup = Vc.key.upper()
+    
     KeyWord = Vc.generate_key(Vc.string, Vc.key)
     print(KeyWord)
     CipherText = Vc.cipherText(Vc.string, Vc.key)
