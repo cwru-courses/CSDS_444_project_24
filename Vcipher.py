@@ -6,9 +6,11 @@
 # it's length isn't equal to
 # the length of original text
 import string
+from bitarray import bitarray
+
 
 class Vigenere():
-
+    
     def generate_key(self, string, key):
         key = list(key)
         if len(string) == len(key):
@@ -48,6 +50,8 @@ class Vigenere():
 if __name__ == "__main__":
     Vc = Vigenere()
     Vc.string = input("string:")
+    bytestring = bytearray(Vc.string, 'utf-8')
+    print(bytestring)
     stringup = Vc.string.upper()
     stringup = stringup.replace(" ",'')
     punct = string.punctuation
