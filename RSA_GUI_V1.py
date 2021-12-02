@@ -92,7 +92,7 @@ class APP:
         self.text = tk.StringVar(value="Private Key")
         self.text_pub = tk.StringVar(value="Public Key")
 
-        self.root.title("Simple Text Editor")
+        self.root.title("RSA")
         self.root.rowconfigure(0, minsize=800, weight=1)
         self.root.columnconfigure(1, minsize=800, weight=1)
 
