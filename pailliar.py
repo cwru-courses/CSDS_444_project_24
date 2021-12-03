@@ -38,7 +38,7 @@ class Paillier(object):
         
         n = p * q
         lamda = self.lcm(p-1, q-1)
-        g = randint(0,1024)
+        g = n + 1
         mu = (pow(g,lamda,n*n)-1) // n
         mu = libnum.invmod(mu, n)
         
