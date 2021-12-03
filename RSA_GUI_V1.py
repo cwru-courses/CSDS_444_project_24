@@ -157,7 +157,7 @@ class APP:
 
     def open_file(self):
         filepath = askopenfilename(
-            filetypes=[("jpg", "*.jpg"), ("docx", "*.docx"), ("pdf", "*.pdf"), ("png file", "*.png"), ("Text Files", "*.txt"), ("Csv Files", "*.csv"), ("py file", "*.py"), ("yml file", "*.yml"), ("All Files", "*.*")]
+            filetypes=[("Text Files", "*.txt"), ("jpg", "*.jpg"), ("docx", "*.docx"), ("pdf", "*.pdf"), ("png file", "*.png"), ("Csv Files", "*.csv"), ("py file", "*.py"), ("yml file", "*.yml"), ("All Files", "*.*")]
         )
         print(filepath)
         if not filepath:
