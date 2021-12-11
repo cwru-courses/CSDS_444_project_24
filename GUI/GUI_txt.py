@@ -16,7 +16,11 @@ import time
 
 class txt_MainWindow(object):
 
+    def __init__(self):
+        self.cpath = None
+
     def setupUi(self, MainWindow):
+        self.cpath = ''
         MainWindow.setObjectName("MainWindow")
         MainWindow.resize(916, 708)
         self.centralwidget = QtWidgets.QWidget(MainWindow)
@@ -135,6 +139,7 @@ class txt_MainWindow(object):
         print(directory1)
         path = directory1[0]
         if path != '':
+            self.cpath=path
             with open(file=path, mode='r+', encoding='utf-8') as file:
                 self.textEdit_txt.setPlainText(file.read())
         else:
@@ -160,6 +165,7 @@ class txt_MainWindow(object):
                 print('Vcipher')
                 self.textEdit_execution.setText('1')
                 self.textEdit_result.setText('2')
+                print(self.cpath)
             else:
                 self.empty_messageDialog()
         elif self.radioButton_4.isChecked():
