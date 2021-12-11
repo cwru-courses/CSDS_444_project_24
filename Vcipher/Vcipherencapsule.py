@@ -16,6 +16,7 @@ import base64
 import time
 
 from numpy.core.fromnumeric import shape
+
     
 
 
@@ -42,7 +43,7 @@ class Vigenere():
         
         #The join() method takes all items in an iterable and joins them into one string. 
 
-    def cipherText(self, string, key):
+    def cipher_Text(self, string, key):
         cipher_text = ""
         '''for char in string:
             if ord(char) in range(65,91):
@@ -69,7 +70,7 @@ class Vigenere():
 
 
         
-    def original_text(self,cipher_text, key):
+    def decrypt_text(self,cipher_text, key):
         output = ""
         for i in range(len(cipher_text)):
             if cipher_text[i] not in self.asciilist:
@@ -78,73 +79,52 @@ class Vigenere():
         return output
 
 
+    def encrypt_img(self, img_path, key ):
+        byte_path = 'image_bytes.txt'
+        cipher_path = 'cipher_img.txt'
+        with open(img_path, 'rb') as f :
+            img_byte2string = base64.b64encode(f.read())
+            img_string = img_byte2string.decode('ascii')
+            with open(byte_path, 'w') as f:
+                f.write(img_string)
+            Cipher_Image = self.cipher_Text(img_string, key )
+            with open(cipher_path, 'w') as f:
+                f.write(Cipher_Image)
+        
+    def decrypt_img(self, key):
+        cipher_path = 'cipher_img.txt'
+        plainimg_path = 'PlainImage.txt'
+        originalimg_path = 'originalImage.jpg'
+        with open(cipher_path, 'r') as f:
+            Cipher_Image = f.read()
+            Plain_Image = self.decrypt_text(Cipher_Image, key)
+            with open(plainimg_path, "w") as p:
+                p.write(Plain_Image)
+            String2Bytes = Plain_Image.encode('ascii')
+
+        with open(originalimg_path,'wb') as str2image:
+            str2image.write(base64.b64decode(String2Bytes))
+            str2image.close()
+
+def main():
+        Vc = Vigenere()
+        with open("key3.txt", "r") as k :
+            key = k.read()
+        img_path = 'figure2_700_525.png'
+        Vc.encrypt_img(img_path,key)
+        Vc.decrypt_img(key)
+        print("success!")
+    
+if __name__ == '__main__':
+    main()
+        
+
+        
+
  
 
     
 
-if __name__ == "__main__":
-    Vc = Vigenere()
-    #long text encryption
-    with open("plaintext4.txt", "r") as f:
-        data = f.read()
-    #    print(data)
-    # the file input
-    with open("key3.txt", "r") as k :
-        key = k.read()
-    # the key 
-    start_cipher = time.time()
-    CipherText = Vc.cipherText(data, key)
-    end_cipher = time.time()
-    print("time to encrypt long text ", end_cipher - start_cipher)
-    
-    with open("Ciphertext.txt","w") as c:
-        c.write(CipherText)
-    start_decrypt = time.time()
-    PlainText = Vc.original_text(CipherText,key)
-    end_decrypt = time.time()
-    print("time to decrypt long text", end_decrypt - start_cipher)
-    with open("Plaintext.txt", "w") as p:
-        p.write(PlainText)
-
-    # Image to bytes
-    img_path = 'figure3_1920_970.png'
-    fname = 'imagebytes.txt'
-    with open(img_path,'rb') as f:
-        img_byte2string = base64.b64encode(f.read())
-        img_string = img_byte2string.decode('ascii')
-        # print(img_string)
-    start_cipherimg = time.time()
-    if not os.path.getsize(fname):
-        with open(fname,'w') as f:
-            f.write(img_string)
-    else:
-        with open(fname,'w') as f:
-            f.truncate(0)
-            f.write(img_string)
-    #bytes to image
-
-    #Encrypt the Image
-    Cipher_Image = Vc.cipherText(img_string, key)
-    end_encryptimg = time.time()
-    print("time to encrypt the image:" , end_encryptimg - start_cipherimg)
-
-
-
-    start_decryptimg = time.time()
-    with open('cipher_image.txt', 'w') as f:
-        f.write(Cipher_Image)
-    Plain_Image = Vc.original_text(Cipher_Image, key)
-    with open("PlainImage.txt", "w") as p:
-        p.write(Plain_Image)
-    
-    String2Bytes = Plain_Image.encode('ascii')
-    #print(type(String2Bytes))
-
-    with open('originalImage.jpg','wb') as str2image:
-       str2image.write(base64.b64decode(String2Bytes))
-       str2image.close()
-    end_decryptimg = time.time()
-    print("time to decrypt img:", end_decryptimg - start_decryptimg)
 
   
     
