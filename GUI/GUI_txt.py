@@ -17,7 +17,8 @@ import time
 class txt_MainWindow(object):
 
     def __init__(self):
-        self.cpath = None
+        self.txt_path = None
+        self.key_path = None
 
     def setupUi(self, MainWindow):
         self.cpath = ''
@@ -139,7 +140,7 @@ class txt_MainWindow(object):
         print(directory1)
         path = directory1[0]
         if path != '':
-            self.cpath=path
+            self.txt_path=path
             with open(file=path, mode='r+', encoding='utf-8') as file:
                 self.textEdit_txt.setPlainText(file.read())
         else:
@@ -151,6 +152,7 @@ class txt_MainWindow(object):
         path = directory1[0]
         print(directory1)
         if path != '':
+            self.key_path = path
             with open(file=path, mode='r+', encoding='utf-8') as file:
                 self.textEdit_key.setPlainText(file.read())
         else:
