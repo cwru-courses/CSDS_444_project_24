@@ -7,7 +7,6 @@ from GUI_pic import pic_MainWindow
 from GUI_vedio import vedio_MainWindow
 
 
-
 class parentWindow(QMainWindow):
     def __init__(self):
         QMainWindow.__init__(self)
@@ -15,12 +14,30 @@ class parentWindow(QMainWindow):
         self.main_ui.setupUi(self)
 
 
-
 class txtWindow(QMainWindow):
     def __init__(self):
         QMainWindow.__init__(self)
         self.child = txt_MainWindow()
         self.child.setupUi(self)
+        # self.child.pushButton_decrypt.clicked.connect(self.decryption)
+
+    # def decryption(self):
+    #     self.textEdit_key.setEnabled(True)
+    #
+    #     if self.radioButton_2.isChecked():
+    #         print('Vcipher')
+    #     elif self.radioButton_4.isChecked():
+    #         print('DES')
+    #     elif self.radioButton_5.isChecked():
+    #         print('MD5')
+    #     elif self.radioButton.isChecked():
+    #         print('Pailler')
+    #     elif self.radioButton_3.isChecked():
+    #         print('RSA')
+    #     else:
+    #         self.messageDialog()
+    #     print(self.textEdit_key.text)
+
 
 class picWindow(QMainWindow):
     def __init__(self):
@@ -28,11 +45,15 @@ class picWindow(QMainWindow):
         self.child = pic_MainWindow()
         self.child.setupUi(self)
 
+
 class videoWindow(QMainWindow):
     def __init__(self):
         QMainWindow.__init__(self)
         self.child = vedio_MainWindow()
         self.child.setupUi(self)
+
+
+
 
 
 if __name__ == '__main__':
