@@ -192,16 +192,16 @@ class txt_MainWindow(object):
 
     def decryption(self):
         self.textEdit_key.setEnabled(True)
-        key = self.textEdit_key.toPlainText() # key
-        txt = self.textEdit_txt.toPlainText()  # text file
+        key = self.textEdit_key.toPlainText() # get key from txt file
+        txt = self.textEdit_txt.toPlainText()  # get cipher text or plain text from txt file
         if self.radioButton_2.isChecked():
             if key != '' and txt != '':
                 '''start = time.time()
                 des = DES()
                 DES_result = des.decryption(key, txt, 1)
                 end = time.time()
-                self.textEdit_result.setText(DES_result)
-                self.textEdit_execution.setText(str(end - start))'''
+                self.textEdit_result.setText(DES_result) # show the result of the encryption or the decryption
+                self.textEdit_execution.setText(str(end - start)) #show the execution time'''
                 print('VC')
             else:
                 self.empty_messageDialog()
@@ -211,21 +211,21 @@ class txt_MainWindow(object):
                 des = DES()
                 DES_result = des.decryption(key, txt, 1)
                 end = time.time()
-                self.textEdit_result.setText(DES_result)
-                self.textEdit_execution.setText(str(end-start))
+                self.textEdit_result.setText(DES_result) # show the result of the encryption or the decryption
+                self.textEdit_execution.setText(str(end-start)) #show the execution time
             else:
                 self.empty_messageDialog()
-        elif self.radioButton_5.isChecked():
+        elif self.radioButton_5.isChecked(): # no key check
             if txt != '':
                 print('MD5')
             else:
                 self.empty_messageDialog2()
-        elif self.radioButton.isChecked():
+        elif self.radioButton.isChecked():  # no key check
             if txt != '':
                 print('Pailler')
             else:
                 self.empty_messageDialog2()
-        elif self.radioButton_3.isChecked():
+        elif self.radioButton_3.isChecked(): # no key check
             if txt != '':
                 print('RSA')
             else:
