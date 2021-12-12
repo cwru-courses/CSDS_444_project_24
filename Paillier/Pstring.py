@@ -21,7 +21,7 @@ class Paillier_String(object):
     def __init__(self):
         self.publicKey = None
         self.privateKey = None 
-        rs = gmpy2.random_state()
+        self.rs = gmpy2.random_state()
         
     def lcm(self, x, y):
         
@@ -42,7 +42,7 @@ class Paillier_String(object):
                 return True
      
     def getP(self):
-        p = gmpy2.mpz_urandomb(rs, 1024)
+        p = gmpy2.mpz_urandomb(self.rs, 2024)
         
         while not gmpy2.is_prime(p):
             p = p + 1
@@ -75,7 +75,7 @@ class Paillier_String(object):
         if isinstance(m, str):
             m = self.sTn(m)
         
-        #print(m)
+        print(m)
         
         n,g = self.publicKey
         r = randint(0,n)

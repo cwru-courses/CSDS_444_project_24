@@ -27,6 +27,7 @@ class txt_MainWindow(object):
         self.priKey = None  # priKey
         self.public_key = None # p public key
         self.private_key = None # p public key
+        self.encode_string = None
         
     def setupUi(self, MainWindow):
         self.cpath = ''
@@ -206,15 +207,14 @@ class txt_MainWindow(object):
                 
                 p = Paillier_String()
                 p.getKeys()
-                file_path = self.txt_path
-                c = p.encrypt(file_path)
+                self.encode_string = p.encrypt(txt)
                 self.public_key = p.publicKey
                 self.private_key = p.privateKey
                 
                 end = time.time()
         
                 self.textEdit_execution.setText(str(end-start))        
-                self.textEdit_result.setText(c)
+                # self.textEdit_result.setText(c)
                 
                 print('Pailler')
             else:
@@ -254,11 +254,11 @@ class txt_MainWindow(object):
                 self.textEdit_execution.setText(str(end - start))  # show the execution time
             else:
                 self.empty_messageDialog()
-        elif self.radioButton_5.isChecked():  # no key check
-            if txt != '':
-                print('MD5')
-            else:
-                self.empty_messageDialog2()
+        # elif self.radioButton_5.isChecked():  # no key check
+        #     if txt != '':
+        #         print('MD5')
+        #     else:
+        #         self.empty_messageDialog2()
         elif self.radioButton.isChecked():  # no key check
             if txt != '':
                 start = time.time()
@@ -267,7 +267,7 @@ class txt_MainWindow(object):
     
                 p.publicKey = self.public_key
                 p.privateKey = self.private_key
-                c = self.textEdit_result.toPlainText()
+                c = self.encode_string
   
                 m = p.decrypt(c)
     

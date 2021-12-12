@@ -206,6 +206,8 @@ class pic_MainWindow(object):
     
                 p = Paillier_Img()
                 p.getKeys()
+                self.private_key=p.privateKey
+                self.public_key=p.publicKey
             
                 img_path = self.pic_path    
                 img = p.imgEncode(img_path)
@@ -280,7 +282,7 @@ class pic_MainWindow(object):
                  img_d = p.imgDecode(self.encodeimg)
                  
                  img_d.save('decodeImg.png')
-                    
+                 dialog_fault = QDialog()
                  label_pic = QLabel("show", dialog_fault)
                  image_path = 'decodeImg.png'
                  pic = QPixmap(image_path)
@@ -292,8 +294,7 @@ class pic_MainWindow(object):
     
                  end = time.time()
                  self.textEdit_execution.setText(str(end-start))
-               
-                print('Pailler')
+
             else:
                 self.empty_messageDialog2()
         elif self.radioButton_3.isChecked():  # no key check
