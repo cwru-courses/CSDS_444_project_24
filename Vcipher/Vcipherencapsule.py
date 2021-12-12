@@ -108,9 +108,9 @@ class Vigenere():
 
 def main():
     Vc = Vigenere()
-    with open('key3.txt','r') as f:
+    with open('key1.txt','r') as f:
         key = f.read()
-    file_path = 'plaintext3.txt'
+    file_path = 'plaintext4.txt'
     img_path = "figure3_1920_970.png"
     Vc.cipher_Text(file_path,key)
     Vc.decrypt_text(key)

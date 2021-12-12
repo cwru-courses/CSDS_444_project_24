@@ -12,7 +12,7 @@ from PyQt5 import QtCore, QtGui, QtWidgets
 from PyQt5.QtWidgets import QFileDialog, QMessageBox, QApplication
 #from DES12111 import DES
 import time
-import Vcipher
+
 from Vcipher.Vcipherencapsule import Vigenere
 
 class txt_MainWindow(object):
@@ -210,12 +210,12 @@ class txt_MainWindow(object):
         txt = self.textEdit_txt.toPlainText()  # get cipher text or plain text from txt file
         if self.radioButton_2.isChecked():
             if key != '' and txt != '':
-                '''start = time.time()
-                des = DES()
-                DES_result = des.decryption(key, txt, 1)
+                start = time.time()
+                Vc = Vigenere()
+                Vc_result = Vc.decrypt_text(key)
                 end = time.time()
-                self.textEdit_result.setText(DES_result) # show the result of the encryption or the decryption
-                self.textEdit_execution.setText(str(end - start)) #show the execution time'''
+                self.textEdit_execution.setText(str(end-start))
+                self.textEdit_result.setText(Vc_result)
                 print('VC')
             else:
                 self.empty_messageDialog()
