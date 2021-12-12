@@ -14,14 +14,18 @@ from PyQt5 import QtCore, QtGui, QtWidgets
 from PyQt5.QtGui import QTextCursor, QPixmap
 from PyQt5.QtWidgets import QFileDialog, QDialog, QLabel, QMessageBox
 
-# from des.Des import DES
+from Data_Encryption_Standard.Des import DES
 from Vcipher.Vcipherencapsule import Vigenere
+from RSA.RSA_GUI_V1 import KeyGenerator
+
 
 
 class pic_MainWindow(object):
     def __init__(self):
         self.pic_path = None              # picture path
         self.key_path = None              # key path
+        self.pubKey = None                # pubKey
+        self.priKey = None               # priKey
 
     def setupUi(self, MainWindow):
         MainWindow.setObjectName("MainWindow")
@@ -33,7 +37,7 @@ class pic_MainWindow(object):
         self.textEdit_key.setGeometry(QtCore.QRect(340, 20, 441, 87))
         self.textEdit_key.setObjectName("textEdit_3")
         self.textEdit_pic = QtWidgets.QTextEdit(self.centralwidget)
-        self.textEdit_pic.setEnabled(True)
+        self.textEdit_pic.setEnabled(False)
         self.textEdit_pic.setGeometry(QtCore.QRect(340, 150, 441, 281))
         self.textEdit_pic.setObjectName("textEdit")
         self.verticalLayoutWidget = QtWidgets.QWidget(self.centralwidget)
@@ -68,6 +72,7 @@ class pic_MainWindow(object):
         self.verticalLayout_4.setContentsMargins(0, 0, 0, 0)
         self.verticalLayout_4.setObjectName("verticalLayout_4")
         self.pushButton_4 = QtWidgets.QPushButton(self.verticalLayoutWidget_3)
+        self.pushButton_4.clicked.connect(self.generateKey)
         self.pushButton_4.setObjectName("pushButton_4")
         self.verticalLayout_4.addWidget(self.pushButton_4)
         self.pushButton_key = QtWidgets.QPushButton(self.verticalLayoutWidget_3)
@@ -177,20 +182,20 @@ class pic_MainWindow(object):
                 self.empty_messageDialog()
         elif self.radioButton_4.isChecked():
             if key != '' and self.pic_path != '':
-                # start = time.time()
-                # plain_image = cv2.imread(self.pic_path)
-                # des = DES()
-                # cipher = des.encryption(key, plain_image, 0)
-                # end = time.time()
-                # dialog_fault = QDialog()
-                # self.textEdit_execution.setText(str(end - start))
-                # label_pic = QLabel("show", dialog_fault)
+                start = time.time()
+                plain_image = cv2.imread(self.pic_path)
+                des = DES()
+                cipher = des.encryption(key, plain_image, 0)
+                end = time.time()
+                dialog_fault = QDialog()
+                self.textEdit_execution.setText(str(end - start))
+                label_pic = QLabel("show", dialog_fault)
                 image_path = 'cipher_galaxy.png'
-                # pic = QPixmap(image_path)
-                # label_pic.setPixmap(pic)
-                # label_pic.setGeometry(10, 10, 1019, 537)
-                # # label_pic.setStyleSheet("border: 2px solid blue")
-                # label_pic.setScaledContents(True)
+                pic = QPixmap(image_path)
+                label_pic.setPixmap(pic)
+                label_pic.setGeometry(10, 10, 1019, 537)
+                # label_pic.setStyleSheet("border: 2px solid blue")
+                label_pic.setScaledContents(True)
             else:
                 self.empty_messageDialog()
         elif self.radioButton.isChecked():
@@ -233,12 +238,21 @@ class pic_MainWindow(object):
                 self.empty_messageDialog()
         elif self.radioButton_4.isChecked():
             if key != '' and self.pic_path != '':
-                # start = time.time()
-                # des = DES()
-                # DES_result = des.decryption(key, txt, 0)
+                start = time.time()
+                plain_image = cv2.imread(self.pic_path)
+                des = DES()
+                cipher = des.decryption(key, plain_image, 0)
                 end = time.time()
-                # self.textEdit_result.setText(DES_result)  # show the result of the encryption or the decryption
-                # self.textEdit_execution.setText(str(end - start))  # show the execution time
+                dialog_fault = QDialog()
+                self.textEdit_execution.setText(str(end - start))
+                label_pic = QLabel("show", dialog_fault)
+                image_path = 'final_galaxy.png'
+                pic = QPixmap(image_path)
+                label_pic.setPixmap(pic)
+                label_pic.setGeometry(10, 10, 1019, 537)
+                # label_pic.setStyleSheet("border: 2px solid blue")
+                label_pic.setScaledContents(True)
+                dialog_fault.exec_()
             else:
                 self.empty_messageDialog()
         elif self.radioButton.isChecked():  # no key check
@@ -265,3 +279,9 @@ class pic_MainWindow(object):
     def empty_messageDialog2(self):
         msg_box = QMessageBox(QMessageBox.Warning, 'warning', 'no text')
         msg_box.exec_()
+
+    # generate private key and public key
+    def generateKey(self):
+        self.pubKey = ''  # pubKey
+        self.priKey = ''  # priKey
+        self.textEdit_key.setPlainText('public key:' + self.pubKey + '\n' + 'private key:' + self.priKey + '\n')

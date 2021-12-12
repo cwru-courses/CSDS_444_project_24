@@ -10,16 +10,21 @@ import sys
 
 from PyQt5 import QtCore, QtGui, QtWidgets
 from PyQt5.QtWidgets import QFileDialog, QMessageBox, QApplication
-#from DES12111 import DES
+# from DES12111 import DES
+from Data_Encryption_Standard.Des import DES
 import time
 
 from Vcipher.Vcipherencapsule import Vigenere
+from RSA.RSA_GUI_V1 import KeyGenerator
+
 
 class txt_MainWindow(object):
 
     def __init__(self):
         self.txt_path = None
         self.key_path = None
+        self.pubKey = None  # pubKey
+        self.priKey = None  # priKey
 
     def setupUi(self, MainWindow):
         self.cpath = ''
@@ -39,9 +44,9 @@ class txt_MainWindow(object):
         self.radioButton_4 = QtWidgets.QRadioButton(self.verticalLayoutWidget)
         self.radioButton_4.setObjectName("radioButton_4")
         self.verticalLayout.addWidget(self.radioButton_4)
-        self.radioButton_5 = QtWidgets.QRadioButton(self.verticalLayoutWidget)
-        self.radioButton_5.setObjectName("radioButton_5")
-        self.verticalLayout.addWidget(self.radioButton_5)
+        # self.radioButton_5 = QtWidgets.QRadioButton(self.verticalLayoutWidget)
+        # self.radioButton_5.setObjectName("radioButton_5")
+        # self.verticalLayout.addWidget(self.radioButton_5)
         self.radioButton_3 = QtWidgets.QRadioButton(self.verticalLayoutWidget)
         self.radioButton_3.setObjectName("radioButton_3")
         self.verticalLayout.addWidget(self.radioButton_3)
@@ -88,9 +93,11 @@ class txt_MainWindow(object):
         self.verticalLayout_4 = QtWidgets.QVBoxLayout(self.verticalLayoutWidget_3)
         self.verticalLayout_4.setContentsMargins(0, 0, 0, 0)
         self.verticalLayout_4.setObjectName("verticalLayout_4")
-        self.pushButton_4 = QtWidgets.QPushButton(self.verticalLayoutWidget_3)
-        self.pushButton_4.setObjectName("pushButton_4")
-        self.verticalLayout_4.addWidget(self.pushButton_4)
+        self.pushButton_generate = QtWidgets.QPushButton(self.verticalLayoutWidget_3)
+        self.pushButton_generate.setObjectName("pushButton_4")
+        self.pushButton_generate.clicked.connect(self.generateKey)
+        self.pushButton_generate.clicked.connect(self.generateKey)
+        self.verticalLayout_4.addWidget(self.pushButton_generate)
         self.pushButton_5 = QtWidgets.QPushButton(self.verticalLayoutWidget_3)
         self.pushButton_5.setObjectName("pushButton_5")
         self.pushButton_5.clicked.connect(self.open_key_file)
@@ -124,7 +131,7 @@ class txt_MainWindow(object):
         MainWindow.setWindowTitle(_translate("MainWindow", "MainWindow"))
         self.radioButton_2.setText(_translate("MainWindow", "Vcipher"))
         self.radioButton_4.setText(_translate("MainWindow", "DES"))
-        self.radioButton_5.setText(_translate("MainWindow", "MD5"))
+        # self.radioButton_5.setText(_translate("MainWindow", "MD5"))
         self.radioButton_3.setText(_translate("MainWindow", "RSA"))
         self.radioButton.setText(_translate("MainWindow", "Pailler"))
         self.pushButton_3.setText(_translate("MainWindow", "Open file"))
@@ -132,23 +139,23 @@ class txt_MainWindow(object):
         self.pushButton_decrypt.setText(_translate("MainWindow", "Decryption"))
         self.label.setText(_translate("MainWindow", "Plaintext/Cipher text"))
         self.label_2.setText(_translate("MainWindow", "Result"))
-        self.pushButton_4.setText(_translate("MainWindow", "Generate"))
+        self.pushButton_generate.setText(_translate("MainWindow", "Generate"))
         self.pushButton_5.setText(_translate("MainWindow", "Open Key file"))
         self.label_3.setText(_translate("MainWindow", "Exectution time"))
 
     def openfile(self):
-        directory1 = QFileDialog.getOpenFileName(None, "select file",'./key/', "(*.txt))")
+        directory1 = QFileDialog.getOpenFileName(None, "select file", './key/', "(*.txt))")
         print(directory1)
         path = directory1[0]
         if path != '':
-            self.txt_path=path
+            self.txt_path = path
             with open(file=path, mode='r+', encoding='utf-8') as file:
                 self.textEdit_txt.setPlainText(file.read())
         else:
             self.textEdit_txt.setPlainText('')
 
     def open_key_file(self):
-        directory1 = QFileDialog.getOpenFileName(None, "select file",'./key/', "(*.txt))")
+        directory1 = QFileDialog.getOpenFileName(None, "select file", './key/', "(*.txt))")
 
         path = directory1[0]
         print(directory1)
@@ -158,7 +165,9 @@ class txt_MainWindow(object):
                 self.textEdit_key.setPlainText(file.read())
         else:
             self.textEdit_key.setPlainText('')
+
     '''encryption operation'''
+
     def encryption(self):
         self.textEdit_key.setEnabled(True)
         key = self.textEdit_key.toPlainText()
@@ -168,27 +177,27 @@ class txt_MainWindow(object):
                 start = time.time()
                 Vc = Vigenere()
                 file_path = self.txt_path
-                Vc_result = Vc.cipher_Text(file_path,key)
+                Vc_result = Vc.cipher_Text(file_path, key)
                 end = time.time()
-                self.textEdit_execution.setText(str(end-start))
+                self.textEdit_execution.setText(str(end - start))
                 self.textEdit_result.setText(Vc_result)
             else:
                 self.empty_messageDialog()
-        # elif self.radioButton_4.isChecked():
-        #     if key != '' and txt != '':
-        #         start = time.time()
-        #         des = DES()
-        #         DES_result = des.encryption(key, txt, 1)
-        #         end = time.time()
-        #         self.textEdit_result.setText(DES_result)
-        #         self.textEdit_execution.setText(str(end - start))
-        #     else:
-        #         self.empty_messageDialog()
-        elif self.radioButton_5.isChecked():
-            if txt != '':
-                print('MD5')
+        elif self.radioButton_4.isChecked():
+            if key != '' and txt != '':
+                start = time.time()
+                des = DES()
+                DES_result = des.encryption(key, txt, 1)
+                end = time.time()
+                self.textEdit_result.setText(DES_result)
+                self.textEdit_execution.setText(str(end - start))
             else:
-                self.empty_messageDialog2()
+                self.empty_messageDialog()
+        # elif self.radioButton_5.isChecked():
+        #     if txt != '':
+        #         print('MD5')
+        #     else:
+        #         self.empty_messageDialog2()
         elif self.radioButton.isChecked():
             if txt != '':
                 print('Pailler')
@@ -203,9 +212,10 @@ class txt_MainWindow(object):
             self.messageDialog()
 
     '''decryption operation'''
+
     def decryption(self):
         self.textEdit_key.setEnabled(True)
-        key = self.textEdit_key.toPlainText() # get key from txt file
+        key = self.textEdit_key.toPlainText()  # get key from txt file
         txt = self.textEdit_txt.toPlainText()  # get cipher text or plain text from txt file
         if self.radioButton_2.isChecked():
             if key != '' and txt != '':
@@ -213,7 +223,7 @@ class txt_MainWindow(object):
                 Vc = Vigenere()
                 Vc_result = Vc.decrypt_text(key)
                 end = time.time()
-                self.textEdit_execution.setText(str(end-start))
+                self.textEdit_execution.setText(str(end - start))
                 self.textEdit_result.setText(Vc_result)
                 print('VC')
             else:
@@ -224,11 +234,11 @@ class txt_MainWindow(object):
                 des = DES()
                 DES_result = des.decryption(key, txt, 1)
                 end = time.time()
-                self.textEdit_result.setText(DES_result) # show the result of the encryption or the decryption
-                self.textEdit_execution.setText(str(end-start)) #show the execution time
+                self.textEdit_result.setText(DES_result)  # show the result of the encryption or the decryption
+                self.textEdit_execution.setText(str(end - start))  # show the execution time
             else:
                 self.empty_messageDialog()
-        elif self.radioButton_5.isChecked(): # no key check
+        elif self.radioButton_5.isChecked():  # no key check
             if txt != '':
                 print('MD5')
             else:
@@ -238,7 +248,7 @@ class txt_MainWindow(object):
                 print('Pailler')
             else:
                 self.empty_messageDialog2()
-        elif self.radioButton_3.isChecked(): # no key check
+        elif self.radioButton_3.isChecked():  # no key check
             if txt != '':
                 print('RSA')
             else:
@@ -257,3 +267,9 @@ class txt_MainWindow(object):
     def empty_messageDialog2(self):
         msg_box = QMessageBox(QMessageBox.Warning, 'warning', 'no text')
         msg_box.exec_()
+
+    # generate private key and public key
+    def generateKey(self):
+        self.pubKey = ''  # pubKey
+        self.priKey = ''  # priKey
+        self.textEdit_key.setPlainText('public key:'+self.pubKey+'\n'+'private key:'+self.priKey+'\n')
