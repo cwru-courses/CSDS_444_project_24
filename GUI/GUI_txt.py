@@ -221,7 +221,16 @@ class txt_MainWindow(object):
                 self.empty_messageDialog2()
         elif self.radioButton_3.isChecked():
             if txt != '':
-                print('RSA')
+                start = time.time()
+                rsa = RSAtext()
+                rsa.getkeys()
+                self.pubKey =rsa.PublicKey
+                self.priKey =rsa.PrivateKey
+                rsa.msg = txt
+                RSA_result = rsa.encrypt()
+                end = time.time()
+                self.textEdit_execution.setText(str(end - start))
+                self.textEdit_result.setText(RSA_result)
             else:
                 self.empty_messageDialog2()
         else:
@@ -279,7 +288,16 @@ class txt_MainWindow(object):
                 self.empty_messageDialog2()
         elif self.radioButton_3.isChecked():  # no key check
             if txt != '':
-                print('RSA')
+                start = time.time()
+                rsa = RSAtext()
+                (rsa.n, rsa.d) = self.priKey
+                rsa.secret = txt
+                M = rsa.decrypt()
+                self.priKey
+
+                end = time.time()
+                self.textEdit_execution.setText(str(end - start))
+                self.textEdit_result.setText(M)
             else:
                 self.empty_messageDialog2()
         else:
