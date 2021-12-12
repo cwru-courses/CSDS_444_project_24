@@ -10,9 +10,10 @@ import sys
 
 from PyQt5 import QtCore, QtGui, QtWidgets
 from PyQt5.QtWidgets import QFileDialog, QMessageBox, QApplication
-from DES12111 import DES
+#from DES12111 import DES
 import time
-
+import Vcipher
+from Vcipher.Vcipherencapsule import Vigenere
 
 class txt_MainWindow(object):
 
@@ -164,22 +165,26 @@ class txt_MainWindow(object):
         txt = self.textEdit_txt.toPlainText()
         if self.radioButton_2.isChecked():
             if key != '' and txt != '':
-                print('Vcipher')
-                self.textEdit_execution.setText('1')
-                self.textEdit_result.setText('2')
+                start = time.time()
+                Vc = Vigenere()
+                file_path = self.txt_path
+                Vc_result = Vc.cipher_Text(file_path,key)
+                end = time.time()
+                self.textEdit_execution.setText(str(end-start))
+                self.textEdit_result.setText(Vc_result)
                 print(self.txt_path)
             else:
                 self.empty_messageDialog()
-        elif self.radioButton_4.isChecked():
-            if key != '' and txt != '':
-                start = time.time()
-                des = DES()
-                DES_result = des.encryption(key, txt, 1)
-                end = time.time()
-                self.textEdit_result.setText(DES_result)
-                self.textEdit_execution.setText(str(end - start))
-            else:
-                self.empty_messageDialog()
+        # elif self.radioButton_4.isChecked():
+        #     if key != '' and txt != '':
+        #         start = time.time()
+        #         des = DES()
+        #         DES_result = des.encryption(key, txt, 1)
+        #         end = time.time()
+        #         self.textEdit_result.setText(DES_result)
+        #         self.textEdit_execution.setText(str(end - start))
+        #     else:
+        #         self.empty_messageDialog()
         elif self.radioButton_5.isChecked():
             if txt != '':
                 print('MD5')
