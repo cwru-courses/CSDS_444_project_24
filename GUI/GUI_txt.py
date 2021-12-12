@@ -261,7 +261,20 @@ class txt_MainWindow(object):
                 self.empty_messageDialog2()
         elif self.radioButton.isChecked():  # no key check
             if txt != '':
-                print('Pailler')
+                start = time.time()
+    
+                p = Paillier_String()
+    
+                p.publicKey = self.public_key
+                p.privateKey = self.private_key
+                c = self.textEdit_result.toPlainText()
+  
+                m = p.decrypt(c)
+    
+                end = time.time()
+    
+                self.textEdit_execution.setText(str(end-start))        
+                self.textEdit_result.setText(m)                                                   
             else:
                 self.empty_messageDialog2()
         elif self.radioButton_3.isChecked():  # no key check
