@@ -17,7 +17,7 @@ from PyQt5.QtWidgets import QFileDialog, QDialog, QLabel, QMessageBox
 
 from Data_Encryption_Standard.Des import DES
 from Vcipher.Vcipherencapsule import Vigenere
-from RSA.RSA_GUI_V1 import KeyGenerator
+from RSA.RSA import KeyGenerator
 from Paillier.Pimg import Paillier_Img
 
 class pic_MainWindow(object):
