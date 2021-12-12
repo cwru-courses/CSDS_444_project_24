@@ -17,8 +17,7 @@ from PyQt5.QtWidgets import QFileDialog, QDialog, QLabel, QMessageBox
 from Data_Encryption_Standard.Des import DES
 from Vcipher.Vcipherencapsule import Vigenere
 from RSA.RSA_GUI_V1 import KeyGenerator
-
-
+from Paillier.Pimg import Paillier_Img
 
 class pic_MainWindow(object):
     def __init__(self):
@@ -26,7 +25,10 @@ class pic_MainWindow(object):
         self.key_path = None              # key path
         self.pubKey = None                # pubKey
         self.priKey = None               # priKey
-
+        self.public_key = None
+        self.private_key = None
+        self.encodeimg = None
+        
     def setupUi(self, MainWindow):
         MainWindow.setObjectName("MainWindow")
         MainWindow.resize(871, 660)
@@ -200,6 +202,18 @@ class pic_MainWindow(object):
                 self.empty_messageDialog()
         elif self.radioButton.isChecked():
             if self.pic_path != '':
+                start = time.time()
+    
+                p = Paillier_Img()
+                p.getKeys()
+            
+                img_path = self.pic_path    
+                img = p.imgEncode(img_path)
+                self.encodeimg = img
+    
+                end = time.time()
+                self.textEdit_execution.setText(str(end-start))
+                                
                 print('Pailler')
             else:
                 self.empty_messageDialog2()
@@ -257,6 +271,28 @@ class pic_MainWindow(object):
                 self.empty_messageDialog()
         elif self.radioButton.isChecked():  # no key check
             if self.pic_path != '':
+                 start = time.time()    
+                 p = Paillier_Img()
+
+                 p.publicKey = self.public_key
+                 p.privateKey = self.private_key
+
+                 img_d = p.imgDecode(self.encodeimg)
+                 
+                 img_d.save('decodeImg.png')
+                    
+                 label_pic = QLabel("show", dialog_fault)
+                 image_path = 'decodeImg.png'
+                 pic = QPixmap(image_path)
+                 label_pic.setPixmap(pic)
+                 label_pic.setGeometry(10, 10, 1019, 537)
+                # label_pic.setStyleSheet("border: 2px solid blue")
+                 label_pic.setScaledContents(True)
+                 dialog_fault.exec_()   
+    
+                 end = time.time()
+                 self.textEdit_execution.setText(str(end-start))
+               
                 print('Pailler')
             else:
                 self.empty_messageDialog2()
