@@ -15,6 +15,7 @@ from PyQt5.QtGui import QTextCursor, QPixmap
 from PyQt5.QtWidgets import QFileDialog, QDialog, QLabel, QMessageBox
 
 from DES12112 import DES
+from Vcipher.Vcipherencapsule import Vigenere
 
 
 class pic_MainWindow(object):
@@ -162,8 +163,13 @@ class pic_MainWindow(object):
 
         if self.radioButton_2.isChecked():
             if key != '' and self.pic_path != '':
-                print('Vcipher')
-                self.textEdit_execution.setText('1')
+                start = time.time()
+                Vc = Vigenere()
+                img_path = self.pic_path
+                Vc.encrypt_img(img_path,key)
+                end = time.time()
+
+                self.textEdit_execution.setText(str(end-start))
 
                 print(self.pic_path)
             else:
@@ -207,13 +213,21 @@ class pic_MainWindow(object):
         txt = self.textEdit_txt.toPlainText()  # get cipher text or plain text from txt file
         if self.radioButton_2.isChecked():
             if key != '' and txt != '':
-                '''start = time.time()
-                des = DES()
-                DES_result = des.decryption(key, txt, 1)
+                start = time.time()
+                Vc = Vigenere()
+                Vc.decrypt_img(key)
                 end = time.time()
-                self.textEdit_result.setText(DES_result) # show the result of the encryption or the decryption
-                self.textEdit_execution.setText(str(end - start)) #show the execution time'''
-                print('VC')
+                self.textEdit_execution.setText(str(end-start))
+                dialog_fault = QDialog()
+                self.textEdit_execution.setText(str(end - start))
+                label_pic = QLabel("show", dialog_fault)
+                image_path = 'originalImage.jpg'
+                pic = QPixmap(image_path)
+                label_pic.setPixmap(pic)
+                label_pic.setGeometry(10, 10, 1019, 537)
+                # label_pic.setStyleSheet("border: 2px solid blue")
+                label_pic.setScaledContents(True)
+                dialog_fault.exec_()
             else:
                 self.empty_messageDialog()
         elif self.radioButton_4.isChecked():

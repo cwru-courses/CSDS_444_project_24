@@ -172,7 +172,6 @@ class txt_MainWindow(object):
                 end = time.time()
                 self.textEdit_execution.setText(str(end-start))
                 self.textEdit_result.setText(Vc_result)
-                print(self.txt_path)
             else:
                 self.empty_messageDialog()
         # elif self.radioButton_4.isChecked():
