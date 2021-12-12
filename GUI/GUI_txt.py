@@ -16,7 +16,7 @@ import time
 
 from Vcipher.Vcipherencapsule import Vigenere
 from RSA.RSA_GUI_V1 import KeyGenerator
-
+from Paillier.Pstring import Paillier_String
 
 class txt_MainWindow(object):
 
@@ -25,7 +25,7 @@ class txt_MainWindow(object):
         self.key_path = None
         self.pubKey = None  # pubKey
         self.priKey = None  # priKey
-
+        
     def setupUi(self, MainWindow):
         self.cpath = ''
         MainWindow.setObjectName("MainWindow")
@@ -200,6 +200,18 @@ class txt_MainWindow(object):
         #         self.empty_messageDialog2()
         elif self.radioButton.isChecked():
             if txt != '':
+                start = time.time()
+                
+                p = Paillier_String()
+                p.getKeys()
+                file_path = self.txt_path
+                c = p.encrypt(file_path)
+                
+                end = time.time()
+        
+                self.textEdit_execution.setText(str(end-start))        
+                self.textEdit_result.setText(c)
+                
                 print('Pailler')
             else:
                 self.empty_messageDialog2()
