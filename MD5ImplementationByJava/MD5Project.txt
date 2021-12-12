@@ -1,0 +1,1 @@
+This is the folder for MD5 implementation, which is by java.
