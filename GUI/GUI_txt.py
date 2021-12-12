@@ -15,7 +15,7 @@ from Data_Encryption_Standard.Des import DES
 import time
 
 from Vcipher.Vcipherencapsule import Vigenere
-from RSA.RSA_GUI_V1 import KeyGenerator
+from RSA.RSA_text import RSAtext
 from Paillier.Pstring import Paillier_String
 
 class txt_MainWindow(object):
