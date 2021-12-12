@@ -26,7 +26,7 @@ class RSAtext(object):
                 if target:
                     return p
 
-    def genkeys(length):
+    def genkeys(self,length):
         p = self.gen_prime(length / 2)
         q = self.gen_prime(length / 2)
         self.n = p * q
@@ -41,34 +41,34 @@ class RSAtext(object):
                 break
             self.d += 1
             
-    def getkeys(self):
-        (self.n, self.e,self.d) = self.genkeys(1024)
+    def getkey(self):
+        self.genkeys(1024)
         self.PrivateKey = [self.n, self.d]
         self.PublicKey = [self.n,self.e]
 
-    def miller_rabin(n, k):
-        if n == 2:
+    def miller_rabin(self,nn, k):
+        if nn == 2:
             return True
-        if n % 2 == 0:
+        if nn % 2 == 0:
             return False
-        r, s = 0, n - 1
+        r, s = 0, nn - 1
         while s % 2 == 0:
             r += 1
             s //= 2
         for _ in range(k):
-            a = random.randrange(2, n - 1)
-            x = pow(a, s, n)
-            if x == 1 or x == n - 1:
+            a = random.randrange(2, nn - 1)
+            x = pow(a, s, nn)
+            if x == 1 or x == nn - 1:
                 continue
             for _ in range(r - 1):
-                x = pow(x, 2, n)
-                if x == n - 1:
+                x = pow(x, 2, nn)
+                if x == nn - 1:
                     break
-            else:
-                return False
+                else:
+                    return False
         return True
    # b**e mod m
-    def fast_mod(b, e, m):
+    def fast_mod(self,b, e, m):
         e=int(e)
         track = 2
         aim = [b]

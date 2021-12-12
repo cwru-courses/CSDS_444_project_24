@@ -18,6 +18,7 @@ from Vcipher.Vcipherencapsule import Vigenere
 from RSA.RSA_text import RSAtext
 from Paillier.Pstring import Paillier_String
 
+
 class txt_MainWindow(object):
 
     def __init__(self):
@@ -25,10 +26,10 @@ class txt_MainWindow(object):
         self.key_path = None
         self.pubKey = None  # pubKey
         self.priKey = None  # priKey
-        self.public_key = None # p public key
-        self.private_key = None # p public key
+        self.public_key = None  # p public key
+        self.private_key = None  # p public key
         self.encode_string = None
-        
+
     def setupUi(self, MainWindow):
         self.cpath = ''
         MainWindow.setObjectName("MainWindow")
@@ -204,18 +205,18 @@ class txt_MainWindow(object):
         elif self.radioButton.isChecked():
             if txt != '':
                 start = time.time()
-                
+
                 p = Paillier_String()
                 p.getKeys()
                 self.encode_string = p.encrypt(txt)
                 self.public_key = p.publicKey
                 self.private_key = p.privateKey
-                
+
                 end = time.time()
-        
-                self.textEdit_execution.setText(str(end-start))        
+
+                self.textEdit_execution.setText(str(end - start))
                 # self.textEdit_result.setText(c)
-                
+
                 print('Pailler')
             else:
                 self.empty_messageDialog2()
@@ -223,14 +224,17 @@ class txt_MainWindow(object):
             if txt != '':
                 start = time.time()
                 rsa = RSAtext()
-                rsa.getkeys()
-                self.pubKey =rsa.PublicKey
-                self.priKey =rsa.PrivateKey
+                rsa.getkey()
+                self.pubKey = rsa.PublicKey
+                self.priKey = rsa.PrivateKey
                 rsa.msg = txt
                 RSA_result = rsa.encrypt()
                 end = time.time()
                 self.textEdit_execution.setText(str(end - start))
                 self.textEdit_result.setText(RSA_result)
+                with open("RSA_result.txt", "w") as f:
+                    f.write(RSA_result)
+                f.close()
             else:
                 self.empty_messageDialog2()
         else:
@@ -271,19 +275,19 @@ class txt_MainWindow(object):
         elif self.radioButton.isChecked():  # no key check
             if txt != '':
                 start = time.time()
-    
+
                 p = Paillier_String()
-    
+
                 p.publicKey = self.public_key
                 p.privateKey = self.private_key
                 c = self.encode_string
-  
+
                 m = p.decrypt(c)
-    
+
                 end = time.time()
-    
-                self.textEdit_execution.setText(str(end-start))        
-                self.textEdit_result.setText(m)                                                   
+
+                self.textEdit_execution.setText(str(end - start))
+                self.textEdit_result.setText(m)
             else:
                 self.empty_messageDialog2()
         elif self.radioButton_3.isChecked():  # no key check
@@ -319,4 +323,4 @@ class txt_MainWindow(object):
     def generateKey(self):
         self.pubKey = ''  # pubKey
         self.priKey = ''  # priKey
-        self.textEdit_key.setPlainText('public key:'+self.pubKey+'\n'+'private key:'+self.priKey+'\n')
+        self.textEdit_key.setPlainText('public key:' + self.pubKey + '\n' + 'private key:' + self.priKey + '\n')

@@ -365,7 +365,7 @@ class DES():
                 dimension_path = 'dimension.mat'
                 dimension_array = np.array([length_one, length_two, length_three])
                 io.savemat(dimension_path, {'dimension': np.array(dimension_array)})
-            return cipher_result
+            return multiple
         else:
             length_one = int(file.get(cv2.CAP_PROP_FRAME_COUNT))
             length_two = int(file.get(cv2.CAP_PROP_FRAME_WIDTH))
@@ -424,7 +424,8 @@ class DES():
                 dimension_path = 'dimension.mat'
                 dimension_array = np.array([length_one, length_two, length_three])
                 io.savemat(dimension_path, {'dimension': np.array(dimension_array)})
-            return cipher_result
+            # return cipher_result
+            return multiple
 
     def decryption(self, key, file, type):
         bin_key = self.setKey(key)
@@ -520,6 +521,7 @@ class DES():
                 final_result = np.array(cipher_result[0:]).reshape(length_one, length_two, length_three)
             cv2.imwrite("final_galaxy.png", final_result)
             return final_result
+
 
 
 if __name__ == "__main__":
