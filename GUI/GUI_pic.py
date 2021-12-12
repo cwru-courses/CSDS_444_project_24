@@ -14,7 +14,7 @@ from PyQt5 import QtCore, QtGui, QtWidgets
 from PyQt5.QtGui import QTextCursor, QPixmap
 from PyQt5.QtWidgets import QFileDialog, QDialog, QLabel, QMessageBox
 
-from DES12112 import DES
+# from des.Des import DES
 from Vcipher.Vcipherencapsule import Vigenere
 
 
@@ -92,6 +92,7 @@ class pic_MainWindow(object):
         self.pushButton.setObjectName("pushButton")
         self.verticalLayout_3.addWidget(self.pushButton)
         self.pushButton_2 = QtWidgets.QPushButton(self.verticalLayoutWidget_2)
+        self.pushButton_2.clicked.connect(self.decryption)
         self.pushButton_2.setObjectName("pushButton_2")
         self.verticalLayout_3.addWidget(self.pushButton_2)
         MainWindow.setCentralWidget(self.centralwidget)
@@ -176,20 +177,20 @@ class pic_MainWindow(object):
                 self.empty_messageDialog()
         elif self.radioButton_4.isChecked():
             if key != '' and self.pic_path != '':
-                start = time.time()
-                plain_image = cv2.imread(self.pic_path)
-                des = DES()
-                cipher = des.encryption(key, plain_image, 0)
-                end = time.time()
-                dialog_fault = QDialog()
-                self.textEdit_execution.setText(str(end - start))
-                label_pic = QLabel("show", dialog_fault)
+                # start = time.time()
+                # plain_image = cv2.imread(self.pic_path)
+                # des = DES()
+                # cipher = des.encryption(key, plain_image, 0)
+                # end = time.time()
+                # dialog_fault = QDialog()
+                # self.textEdit_execution.setText(str(end - start))
+                # label_pic = QLabel("show", dialog_fault)
                 image_path = 'cipher_galaxy.png'
-                pic = QPixmap(image_path)
-                label_pic.setPixmap(pic)
-                label_pic.setGeometry(10, 10, 1019, 537)
-                # label_pic.setStyleSheet("border: 2px solid blue")
-                label_pic.setScaledContents(True)
+                # pic = QPixmap(image_path)
+                # label_pic.setPixmap(pic)
+                # label_pic.setGeometry(10, 10, 1019, 537)
+                # # label_pic.setStyleSheet("border: 2px solid blue")
+                # label_pic.setScaledContents(True)
             else:
                 self.empty_messageDialog()
         elif self.radioButton.isChecked():
@@ -210,9 +211,9 @@ class pic_MainWindow(object):
     def decryption(self):
         self.textEdit_key.setEnabled(True)
         key = self.textEdit_key.toPlainText()  # get key from txt file
-        txt = self.textEdit_txt.toPlainText()  # get cipher text or plain text from txt file
+
         if self.radioButton_2.isChecked():
-            if key != '' and txt != '':
+            if key != '' and self.pic_path != '':
                 start = time.time()
                 Vc = Vigenere()
                 Vc.decrypt_img(key)
@@ -231,22 +232,22 @@ class pic_MainWindow(object):
             else:
                 self.empty_messageDialog()
         elif self.radioButton_4.isChecked():
-            if key != '' and txt != '':
-                start = time.time()
-                des = DES()
-                DES_result = des.decryption(key, txt, 0)
+            if key != '' and self.pic_path != '':
+                # start = time.time()
+                # des = DES()
+                # DES_result = des.decryption(key, txt, 0)
                 end = time.time()
-                self.textEdit_result.setText(DES_result)  # show the result of the encryption or the decryption
-                self.textEdit_execution.setText(str(end - start))  # show the execution time
+                # self.textEdit_result.setText(DES_result)  # show the result of the encryption or the decryption
+                # self.textEdit_execution.setText(str(end - start))  # show the execution time
             else:
                 self.empty_messageDialog()
         elif self.radioButton.isChecked():  # no key check
-            if txt != '':
+            if self.pic_path != '':
                 print('Pailler')
             else:
                 self.empty_messageDialog2()
         elif self.radioButton_3.isChecked():  # no key check
-            if txt != '':
+            if self.pic_path != '':
                 print('RSA')
             else:
                 self.empty_messageDialog2()
