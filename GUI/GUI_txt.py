@@ -25,6 +25,8 @@ class txt_MainWindow(object):
         self.key_path = None
         self.pubKey = None  # pubKey
         self.priKey = None  # priKey
+        self.public_key = None # p public key
+        self.private_key = None # p public key
         
     def setupUi(self, MainWindow):
         self.cpath = ''
@@ -206,6 +208,8 @@ class txt_MainWindow(object):
                 p.getKeys()
                 file_path = self.txt_path
                 c = p.encrypt(file_path)
+                self.public_key = p.publicKey
+                self.private_key = p.privateKey
                 
                 end = time.time()
         
