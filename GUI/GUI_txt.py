@@ -157,7 +157,7 @@ class txt_MainWindow(object):
                 self.textEdit_key.setPlainText(file.read())
         else:
             self.textEdit_key.setPlainText('')
-
+    '''encryption operation'''
     def encryption(self):
         self.textEdit_key.setEnabled(True)
         key = self.textEdit_key.toPlainText()
@@ -167,7 +167,7 @@ class txt_MainWindow(object):
                 print('Vcipher')
                 self.textEdit_execution.setText('1')
                 self.textEdit_result.setText('2')
-                print(self.cpath)
+                print(self.txt_path)
             else:
                 self.empty_messageDialog()
         elif self.radioButton_4.isChecked():
@@ -198,6 +198,7 @@ class txt_MainWindow(object):
         else:
             self.messageDialog()
 
+    '''decryption operation'''
     def decryption(self):
         self.textEdit_key.setEnabled(True)
         key = self.textEdit_key.toPlainText() # get key from txt file
