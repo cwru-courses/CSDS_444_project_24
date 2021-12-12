@@ -85,7 +85,7 @@ class Vigenere():
 if __name__ == "__main__":
     Vc = Vigenere()
     #long text encryption
-    with open("plaintext4.txt", "r") as f:
+    with open("plaintext3.txt", "r") as f:
         data = f.read()
     #    print(data)
     # the file input
