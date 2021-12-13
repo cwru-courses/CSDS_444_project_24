@@ -336,8 +336,9 @@ class pic_MainWindow(object):
         elif self.radioButton_3.isChecked():  # no key check
             if self.pic_path != '':
                 start = time.time()
-                p = Paillier_Img()
-
+                rsa = RSAimage()
+                IMG=cv2.imread("RSA_result.jpg")
+                result = rsa.decrypt_img()
                 end = time.time()
                 self.textEdit_execution.setText(str(end - start))
             else:

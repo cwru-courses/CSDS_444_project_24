@@ -15,6 +15,8 @@ class RSAimage(object):
         self.PublicKey = None
         self.PrivateKey = None
         self.encrypt = None
+        self.height = None
+        self.width = None
 
     def miller_rabin(self,nn, k):
         a = random.randrange(2, nn - 1)
@@ -105,11 +107,11 @@ class RSAimage(object):
         my_img = io.imread(path)
         plt.imshow(my_img, cmap="gray")
         plt.show()
-        height, width = my_img.shape[0], my_img.shape[1]
+        self.height, self.width = my_img.shape[0], my_img.shape[1]
         row, col = my_img.shape[0], my_img.shape[1]
         self.encrypt= [[0 for x in range(10000)] for y in range(10000)]
-        for i in range(0, height):
-            for j in range(0, width):
+        for i in range(0, self.height):
+            for j in range(0, self.width):
                 r, g, b = my_img[i, j]
                 C1 = self.fast_mod(r, self.e, self.n)
                 C2 = self.fast_mod(g, self.e, self.n)
@@ -129,9 +131,8 @@ class RSAimage(object):
     # In[15]:
 
     def decrypt_img(self):
-        height, width = my_img.shape[0], my_img.shape[1]
-        for i in range(0, height):
-            for j in range(0, width):
+        for i in range(0, self.height):
+            for j in range(0, self.width):
                 r, g, b = self.encrypt[i][j]
                 M1 = self.fast_mod(r, self.d, self.n)
                 M2 = self.fast_mod(g, self.d, self.n)
