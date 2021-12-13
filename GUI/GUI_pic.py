@@ -241,9 +241,16 @@ class pic_MainWindow(object):
                 path = self.pic_path
                 RSA_result = rsa.encrypt_img(path)
                 end = time.time()
-                with open("RSA_result.jpg", "w") as f:
-                    f.write(RSA_result)
-                f.close()
+                cv2.imwrite("RSA_result.jpg",RSA_result)
+                dialog_fault = QDialog()
+                label_pic = QLabel("show", dialog_fault)
+                image_path = "RSA_result.jpg"
+                pic = QPixmap(image_path)
+                label_pic.setPixmap(pic)
+                label_pic.setGeometry(10, 10, 1019, 537)
+                # label_pic.setStyleSheet("border: 2px solid blue")
+                label_pic.setScaledContents(True)
+                dialog_fault.exec_()
                 self.textEdit_execution.setText(str(end-start))
             else:
                 self.empty_messageDialog2()
