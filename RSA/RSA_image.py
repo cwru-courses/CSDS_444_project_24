@@ -96,7 +96,7 @@ def genkeys(self,length):
     elif self.d < 0:
         self.d = self.d+fn
 
-def getkeys(self):
+def getKeys(self):
     self.genkeys(5)
     self.PrivateKey = [self.n, self.d]
     self.PublicKey = [self.n, self.e]

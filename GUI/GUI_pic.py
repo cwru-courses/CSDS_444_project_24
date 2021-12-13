@@ -14,9 +14,10 @@ from PyQt5 import QtCore, QtGui, QtWidgets
 from PyQt5.QtGui import QTextCursor, QPixmap
 from PyQt5.QtWidgets import QFileDialog, QDialog, QLabel, QMessageBox
 
+
 from Data_Encryption_Standard.Des import DES
 from Vcipher.Vcipherencapsule import Vigenere
-
+from RSA.RSA_image import RSAimage
 from Paillier.Pimg import Paillier_Img
 
 class pic_MainWindow(object):
@@ -234,7 +235,7 @@ class pic_MainWindow(object):
             if self.pic_path != '':
                 start = time.time()
                 rsa = RSAimage()
-                rsa.getkeys()
+                rsa.getKeys()
                 self.private_key=rsa.PrivateKey
                 self.public_key=rsa.PublicKey
                 path = self.pic_path
