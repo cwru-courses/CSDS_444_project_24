@@ -338,7 +338,7 @@ class pic_MainWindow(object):
                 start = time.time()
                 rsa = RSAimage()
                 IMG=cv2.imread("RSA_result.jpg")
-                result = rsa.decrypt_img()
+                result = rsa.decrypt_img(path)
                 end = time.time()
                 self.textEdit_execution.setText(str(end - start))
             else:
