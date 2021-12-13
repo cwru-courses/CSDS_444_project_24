@@ -64,7 +64,7 @@ class RSAtext(object):
                 x = pow(x, 2, nn)
                 if x == nn - 1:
                     break
-                else:
+            else:
                     return False
         return True
    # b**e mod m
@@ -84,21 +84,22 @@ class RSAtext(object):
                 multiply %= m
         return multiply
     
-
-    def decrypt(self):
-        self.decrypt_txt = ''
-        for unit in self.secret:
-            self.decrypt_txt += chr(self.fast_mod(ord(unit), int(self.d), int(self.n)))
-        self.decrypt_txt = str(self.decrypt_txt)
-        return self.decrypt_txt
-
-
     def encrypt(self):
         self.secret = ''
         for unit in self.msg:
             self.secret += chr(self.fast_mod(ord(unit), self.e, self.n))
-        self.secret = bytes(self.secret.encode('utf-8')).__str__()
+        #self.secret = bytes(self.secret.encode('utf-8')).__str__()
         return self.secret
+
+    def decrypt(self,C,n,d):
+        self.decrypt_txt = ''
+        for unit in C:
+            self.decrypt_txt += chr(self.fast_mod(ord(unit), int(d), int(n)))
+        self.decrypt_txt = str(self.decrypt_txt)
+        return self.decrypt_txt
+
+
+
  
 
 

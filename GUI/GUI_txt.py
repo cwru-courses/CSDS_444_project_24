@@ -29,6 +29,7 @@ class txt_MainWindow(object):
         self.public_key = None  # p public key
         self.private_key = None  # p public key
         self.encode_string = None
+        self.encodeRSA = ''
 
     def setupUi(self, MainWindow):
         self.cpath = ''
@@ -148,7 +149,8 @@ class txt_MainWindow(object):
         self.label_3.setText(_translate("MainWindow", "Exectution time"))
 
     def openfile(self):
-        directory1 = QFileDialog.getOpenFileName(None, "select file", './key/', "(*.txt))")
+        #directory1 = QFileDialog.getOpenFileName(None, "select file", './key/', "(*.txt))")
+        directory1 = QFileDialog.getOpenFileName(None, "select file", '.', "")
         print(directory1)
         path = directory1[0]
         if path != '':
@@ -232,6 +234,9 @@ class txt_MainWindow(object):
                 end = time.time()
                 self.textEdit_execution.setText(str(end - start))
                 self.textEdit_result.setText(RSA_result)
+                self.encodeRSA = RSA_result
+                print(self.encodeRSA)
+                print(self.priKey)
                 with open("RSA_result.txt", "w") as f:
                     f.write(RSA_result)
                 f.close()
@@ -294,10 +299,12 @@ class txt_MainWindow(object):
             if txt != '':
                 start = time.time()
                 rsa = RSAtext()
-                (rsa.n, rsa.d) = self.priKey
-                rsa.secret = txt
-                M = rsa.decrypt()
-                self.priKey
+                (n,d) = self.priKey
+                print(n)
+                print(d)
+                rsa.secret = self.encodeRSA
+                print(self.encodeRSA)
+                M = rsa.decrypt(self.encodeRSA,n,d)
 
                 end = time.time()
                 self.textEdit_execution.setText(str(end - start))
