@@ -76,13 +76,12 @@ class RSAtext(object):
             aim.append((aim[-1]**2) % m)
             track *= 2
         bin_str = bin(e)[2:][::-1]
-        multiply = 1
-
+        ans = 1
         for i in range(len(bin_str)):
             if bin_str[i] == '1':
-                multiply *= aim[i]
-                multiply %= m
-        return multiply
+                ans *= aim[i]
+                ans %= m
+        return ans
     
     def encrypt(self):
         self.secret = ''
