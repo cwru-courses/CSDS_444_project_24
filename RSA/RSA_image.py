@@ -14,6 +14,7 @@ class RSAimage(object):
         self.d = None
         self.PublicKey = None
         self.PrivateKey = None
+        self.encrypt = None
 
 def miller_rabin(self,nn, k):
     a = random.randrange(2, nn - 1)
@@ -100,20 +101,20 @@ def getkeys(self):
     self.PrivateKey = [self.n, self.d]
     self.PublicKey = [self.n, self.e]
 
-def encrypt_img(self):
-    my_img = io.imread('/Users/bourbon/Downloads/cat_RSA.jpg')
+def encrypt_img(self,path):
+    my_img = io.imread(path)
     plt.imshow(my_img, cmap="gray")
     plt.show()
     height, width = my_img.shape[0], my_img.shape[1]
     row, col = my_img.shape[0], my_img.shape[1]
-    encrypt= [[0 for x in range(10000)] for y in range(10000)]
+    self.encrypt= [[0 for x in range(10000)] for y in range(10000)]
     for i in range(0, height):
         for j in range(0, width):
             r, g, b = my_img[i, j]
-            C1 = self.fast_mod(r, e, n)
-            C2 = self.fast_mod(g, e, n)
-            C3 = self.fast_mod(b, e, n)
-            encrypt[i][j] = [C1, C2, C3]
+            C1 = self.fast_mod(r, self.e, self.n)
+            C2 = self.fast_mod(g, self.e, self.n)
+            C3 = self.fast_mod(b, self.e, self.n)
+            self.encrypt[i][j] = [C1, C2, C3]
             C1 = C1 % 256
             C2 = C2 % 256
             C3 = C3 % 256
@@ -123,19 +124,21 @@ def encrypt_img(self):
     plt.xlabel('encrypted image ')
     plt.imshow(my_img, cmap="gray")
     plt.show()
+    return my_img
 
 # In[15]:
 
 def decrypt_img(self):
-
+    height, width = my_img.shape[0], my_img.shape[1]
     for i in range(0, height):
         for j in range(0, width):
-            r, g, b = encrypt[i][j]
-            M1 = self.fast_mod(r, d, n)
-            M2 = self.fast_mod(g, d, n)
-            M3 = self.fast_mod(b, d, n)
+            r, g, b = self.encrypt[i][j]
+            M1 = self.fast_mod(r, self.d, self.n)
+            M2 = self.fast_mod(g, self.d, self.n)
+            M3 = self.fast_mod(b, self.d, self.n)
             my_img[i, j] = [M1, M2, M3]
     plt.imshow(my_img, cmap="gray")
     plt.xlabel('Image decryption')
     plt.show()
     plt.show(block='True')
+    return my_image

@@ -232,7 +232,18 @@ class pic_MainWindow(object):
                 self.empty_messageDialog2()
         elif self.radioButton_3.isChecked():
             if self.pic_path != '':
-                print('RSA')
+                start = time.time()
+                rsa = RSAimage()
+                rsa.getkeys()
+                self.private_key=rsa.PrivateKey
+                self.public_key=rsa.PublicKey
+                path = self.pic_path
+                RSA_result = rsa.encrypt_img(path)
+                end = time.time()
+                with open("RSA_result.jpg", "w") as f:
+                    f.write(RSA_result)
+                f.close()
+                self.textEdit_execution.setText(str(end-start))
             else:
                 self.empty_messageDialog2()
         else:
@@ -316,7 +327,11 @@ class pic_MainWindow(object):
                 self.empty_messageDialog2()
         elif self.radioButton_3.isChecked():  # no key check
             if self.pic_path != '':
-                print('RSA')
+                start = time.time()
+                p = Paillier_Img()
+
+                end = time.time()
+                self.textEdit_execution.setText(str(end - start))
             else:
                 self.empty_messageDialog2()
         else:

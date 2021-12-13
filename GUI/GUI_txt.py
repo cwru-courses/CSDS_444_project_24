@@ -235,8 +235,6 @@ class txt_MainWindow(object):
                 self.textEdit_execution.setText(str(end - start))
                 self.textEdit_result.setText(RSA_result)
                 self.encodeRSA = RSA_result
-                print(self.encodeRSA)
-                print(self.priKey)
                 with open("RSA_result.txt", "w") as f:
                     f.write(RSA_result)
                 f.close()
