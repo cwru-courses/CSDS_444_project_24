@@ -8,7 +8,7 @@ import math
 
 class RSAimage(object):
 
-    def __init__(self):
+    def __int__(self):
         self.n = None
         self.e = None
         self.d = None
@@ -105,6 +105,8 @@ class RSAimage(object):
 
     def encrypt_img(self,path):
         my_img = io.imread(path)
+        plt.imshow(my_img, cmap="gray")
+        plt.show()
         self.height, self.width = my_img.shape[0], my_img.shape[1]
         row, col = my_img.shape[0], my_img.shape[1]
         self.encrypt= [[0 for x in range(10000)] for y in range(10000)]
@@ -120,23 +122,27 @@ class RSAimage(object):
                 C3 = C3 % 256
                 my_img[i, j] = [C1, C2, C3]
 
+        fig=plt.figure()
+        plt.xlabel('encrypted image ')
+        plt.imshow(my_img, cmap="gray")
+        plt.show()
         return my_img
 
     # In[15]:
 
-    def decrypt_img(self, path):
-        my_image = io.imread(path)
-        self.height, self.width = my_image.shape[0], my_image.shape[1]
-        self.encrypt= [[0 for x in range(10000)] for y in range(10000)]
+    def decrypt_img(self,en):
+        my_img = [[0 for i in range(self.width)] for j in range(self.height)]
+
         for i in range(0, self.height):
             for j in range(0, self.width):
-                C1 = self.fast_mod(r, self.e, self.n)
-                C2 = self.fast_mod(g, self.e, self.n)
-                C3 = self.fast_mod(b, self.e, self.n)
-                self.encrypt[i][j] = [C1, C2, C3]
                 r, g, b = self.encrypt[i][j]
                 M1 = self.fast_mod(r, self.d, self.n)
                 M2 = self.fast_mod(g, self.d, self.n)
                 M3 = self.fast_mod(b, self.d, self.n)
-                my_image[i, j] = [M1, M2, M3]
-        return my_image
+                my_img[i][j] = [M1, M2, M3]
+
+        plt.imshow(np.array(my_img), cmap="gray")
+        plt.xlabel('Image decryption')
+        plt.show()
+        plt.show(block='True')
+        return my_img
